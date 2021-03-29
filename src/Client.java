@@ -29,11 +29,9 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             boolean run = true;
             while (run) {
-                out.println(JOptionPane.showInputDialog(null, "Name?", "Identify yourself!"));
-
-                String msg = in.readLine();
-                JOptionPane.showMessageDialog(null, msg, "Server said", JOptionPane.INFORMATION_MESSAGE);
+                out.println(JOptionPane.showInputDialog(null, "Nu", "Prata med din kompis"));
             }
+
             in.close();
             out.close();
             socket.close();

@@ -1,4 +1,6 @@
+import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -9,7 +11,7 @@ import java.net.Socket;
  * @author magnus
  */
 public class Server {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int port = 1234;
         boolean run = true;
         ServerSocket serverSocket;
@@ -22,7 +24,7 @@ public class Server {
                 System.out.println("Waiting for connections!");
                 socket = serverSocket.accept();
                 // Go
-                PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 System.out.println("Client connected!");
 
@@ -35,27 +37,29 @@ public class Server {
                     socket.close();
                     System.out.println("server shutting down...");
                     System.exit(0);
-                } else if (name.equals("Spotify")) {
-                    Runtime runTime = Runtime.getRuntime();
-                    String executablePath = "spotify";
-                    Process process = runTime.exec(executablePath);
-                    out.println("Vad ska jag lyssna på då?");
                 } else {
                     while (run) {
-                        System.out.println("Client name is \"" + name + "\"");
+                        System.out.println(name);
                         System.out.println("Sending feedback");
                         out.println("SERVER: Welcome " + name + "! Keep up the good work");
                         name = in.readLine();
                     }
-                }
-                in.close();
-                out.close();
-                socket.close();
+                    try {
+                        while (run) {
+                            out.println(JOptionPane.showInputDialog(null, "Nu", "Prata med din kompis"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Client failed to communicate");
+                    }
+                    in.close();
+                    out.close();
+                    socket.close();
 
-                System.out.println("Closing down " + name);
+                    System.out.println("Closing down " + name);
+                }
             }
-        } catch (Exception e) {
-            System.out.println("Server fail");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
