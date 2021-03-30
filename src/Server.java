@@ -41,7 +41,7 @@ public class Server {
                     while (run) {
                         System.out.println(name);
                         System.out.println("Sending feedback");
-                        out.println("SERVER: Welcome " + name + "! Keep up the good work");
+                        out.println("SERVER: Varför heter du " + name + "?! Keep up the good work??");
                         name = in.readLine();
                     }
                     try {
